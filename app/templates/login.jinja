@@ -1,0 +1,14 @@
+{% extends "base.jinja" %}
+{% block title %}Log in :: DC Food Trucks Today{% endblock %}
+
+
+{% block content %}
+<div class="container main">
+    <div class="inner">
+      <p class="lead">Are you a food truck owner? Connect your Twitter account to customize your location on the map.</p>
+      <a href="{{ url_for('auth.tw_auth') }}" class="btn btn-lg btn-tw-connect">
+        <i class="fa fa-twitter"></i> Connect with Twitter
+      </a>
+    </div>
+</div>
+{% endblock %}

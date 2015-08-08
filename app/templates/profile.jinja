@@ -1,0 +1,65 @@
+{% extends "base.jinja" %}
+{% block title %}Profile :: DC Food Trucks Today{% endblock %}
+
+
+{% block content %}
+<div class="container main">
+    <div class="inner">
+
+      <div class="avatar-holder text-center">
+        <img class="img-circle avatar-img" src="{{ user.avatar }}" alt="{{ user.username }}">
+        <div class="avatar-name">@{{ user.username }}</div>
+      </div>
+
+      {% if not user.has_truck %}
+
+        <div class="alert alert-info" role="alert">
+          <strong>Heads up!</strong> We didn't find a food truck associated with this Twitter account. If you have a food truck and want to be included on the map, send us an email at dcfoodtruckstoday@gmail.com and we'll get you added!
+        </div>
+
+      {% else %}
+
+        <div class="alert alert-warning hidden" id="geo-alert" role="alert">
+          <div class="msg"></div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <form action="{{ url_for('main.update') }}" method="POST" id="geo-form" autocomplete="off">
+              <div class="form-group">
+                <label >Add / update location</label>
+                <input type="text" class="form-control geocomplete" name="location" placeholder="Start typing address...">
+              </div>
+              <input type="hidden" name="address" value="">
+              <input type="hidden" name="lat" value="">
+              <input type="hidden" name="lng" value="">
+              <button type="submit" class="btn btn-danger" id="geo-submit">Save</button>
+            </form>
+            <div class="fn">* All locations are reset at midnight each day.</div>
+          </div>
+          <div class="col-sm-6">
+            <div id="profile-map"></div>
+          </div>
+        </div>
+
+      {% endif %}
+
+    </div>
+</div>
+{% endblock %}
+
+
+{% block footerjs %}
+<script>
+define('profile_config', {
+  user: {{ user.to_dict()|tojson }} || {},
+  {% if user.has_truck %}
+  has_location: {{ user.truck.has_location|tojson }},
+  truck_location: {{ user.truck.location|tojson }},
+  truck_info: {{ user.truck.to_dict()|tojson }} || {}
+  {% endif %}
+});
+
+requirejs(['app/profile']);
+</script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.jinja" %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<div class="content">
+  <div id="side-list" class="trucks-in-view">
+    <div class="lead-msg">Finding food trucks...</div>
+  </div>
+  <div id="map"></div>
+  <div id="controls">
+    <a class="btn btn-default" id="trucks-ct" href="#">-</a>
+    <button class="btn btn-default" id="geolocator" type="button" data-loading-text="<img src='/static/img/puff.svg' width='20' alt='loading...'>">
+      <img src='/static/img/marker.svg' width='20' alt=''>
+    </button>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block footerjs %}
+<script type="text/html" id="truck-list-tmpl">
+<% if (data.length == 0) { %>
+  <div class="lead-msg">No trucks found <i class="fa fa-frown-o"></i></div>
+<% } else { %>
+  <% if (context == 'normal') { %>
+    <div class="list-context-msg">
+      <strong><%= truck_ct %></strong> food truck<%= truck_ct > 1 ? 's ' : ' ' %>found:
+    </div>  
+  <% } %>
+  <div class="truck-list-holder">
+  <% for ( var i = 0; i < data.length; i++ ) { %>
+    <div class="media t-entry">
+      <div class="media-left">
+        <a href="https://twitter.com/<%= data[i].handle %>" target="_blank">
+            <img class="media-object t-thumb" src="<%= data[i].img || '/static/img/smile.png' %>">
+        </a>
+      </div>
+      <div class="media-body t-body">
+        <h4 class="media-heading">
+            <%= data[i].name %>
+            <a class="to-twitter" href="https://twitter.com/<%= data[i].handle %>" target="_blank">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </h4>
+        <% var tw = data[i].last_tweet || {}; %>
+        <% if (tw.text) { %>
+        <p class="tweet-text"><%= tw.text %></p>
+        <p class="tweet-time"><%= tw.date_display %></p>
+        <% } %>
+      </div>
+    </div>
+  <% } %>
+  </div>
+<% } %>
+</script>
+
+
+<script type="text/html" id="truck-tt-tmpl">
+<% var tw = data.last_tweet || {}; %>
+<div class="truck-tt">
+  <div class="tt-name"><%= data.name %></div>
+  <% if (tw.text) { %>
+  <div class="tt-tweet">"<%= tw.text %>" (<%= tw.date_display %>)</div>
+  <% } %>
+</div>
+</script>
+
+
+<script>requirejs(['app/home']);</script>
+{% endblock %}

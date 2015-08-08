@@ -1,0 +1,55 @@
+.typeahead {
+  z-index: 1051;
+}
+
+.tt-hint {
+  color: #999;
+  padding: 0 32px;
+}
+
+.tt-menu {
+  width: 100%;
+  max-height: 150px;
+  margin: 2px 0;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  z-index: 100000;
+  overflow-y: auto;
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+@media (max-width: 767px) {
+  .tt-menu {
+    padding: 0;
+  }
+
+  .tt-suggestion {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .tt-suggestion:last-child {
+    border-bottom: none;
+  }
+}
+
+.tt-suggestion:hover {
+  cursor: pointer;
+  background-color: #f4f4f4;
+}
+
+.tt-suggestion.tt-cursor {
+  background-color: #f4f4f4;
+}
+

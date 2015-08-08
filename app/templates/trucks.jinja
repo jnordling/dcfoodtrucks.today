@@ -1,0 +1,50 @@
+{% extends "base.jinja" %}
+
+
+{% block css %}
+{{ super() }}
+<style>
+body {
+  background-color: #f5f5f5;
+}
+.container {
+  max-width: 1200px;
+}
+.t-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.t-img-holder {
+  height: 48px;
+}
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container main">
+  <div class="row">
+    {% for truck in trucks %}
+    <div class="col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="t-name">{{ truck.display_name }}</div>
+          <a href="https://twitter.com/{{ truck.tw_handle }}" target="_blank">@{{ truck.tw_handle }}</a>
+          {% if truck.website %}
+          <div>website: <a href="{{ truck.website }}" target="_blank">link</a></div>
+          {% else %}
+          <div>no website</div>
+          {% endif %}
+          <div class="t-img-holder">
+            <img src="{{ truck.img_thumb }}" alt="" width="50">
+          </div>
+          <div>{{ truck.last_tweet_text }}</div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

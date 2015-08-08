@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <title>{% block title %}DC Food Trucks Today{% endblock %}</title>
+    <meta name="description" content="description">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+
+    {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    {% endblock %}
+
+    {% block head %}{% endblock %}
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <header class="masthead">
+      <div class="{% if skinny_container %}container{% else %}container-fluid{% endif %}">
+        <div class="nav-search-cntnr nav-search-mobile">
+          <div class="inner">
+            <input class="search-input typeahead" type="text" autocorrect="off" placeholder="Search">
+            <i class="fa fa-search"></i>
+            <a class="cancel search-toggle" href="#">Cancel</a>
+          </div>
+        </div>
+        <a href="/" class="masthead-logo">
+          <i class="fa fa-compass"></i>
+          DC Food Trucks <span class="hidden-xs">Today</span>
+        </a>
+        <div class="masthead-other">
+          {% if is_home_page and false %}
+          <div class="nav-search-cntnr hidden-xs">
+            <input class="search-input typeahead" type="text" autocorrect="off" placeholder="Search">
+            <i class="fa fa-search"></i>
+          </div>
+          <a class="btn btn-sm btn-default search-toggle visible-xs-inline-block" href="#">
+            <i class="fa fa-search"></i>
+          </a>
+          {% endif %}
+          <a class="btn btn-sm" href="/about">
+            <span class="btn-ico"><i class="fa fa-question-circle"></i></span>
+            <span class="btn-txt hidden-xs">About</span>
+          </a>
+          {% if not session.logged_in %}
+            <a class="btn btn-sm" href="/login">
+              <span class="btn-ico"><i class="fa fa-truck fa-flip-horizontal"></i></span>
+              <span class="btn-txt hidden-xs">Log in</span>
+            </a>
+          {% else %}
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Me <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="{{ url_for('main.profile') }}">My profile</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <div id="sidebar" class="">
+      <div class="sidebar-item">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" href="#">1234</a>
+        <a class="sidebar-nav-item active" href="#">1234</a>
+        <a class="sidebar-nav-item" href="#">1234</a>
+      </nav>
+      <button type="button" class="btn btn-link sidebar-close sidebar-toggle">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+
+    <div id="bottombar">
+      <div class="trucks-in-view">
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/lib/require.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+    {% block footerjs %}<script>requirejs(['app/base']);</script>{% endblock %}
+
+    {% include 'includes/ga.jinja' %}
+
+  </body>
+</html>
